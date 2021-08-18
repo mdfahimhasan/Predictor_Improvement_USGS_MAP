@@ -56,7 +56,7 @@ def compare_pumpcrop_cdlcrop(pump_csv, cdl_dir_100m=r'.\Yearly_CDL_100m_July', o
         pumps_year['crop_from_cdl'] = crop_name_list
         pump_new = pump_new.append(pumps_year)
     pump_new = pump_new.drop(columns=['Lon_new', 'Lat_new'])
-    pump_new.to_csv(output_csv)
+    pump_new.to_csv(output_csv, index=False)
 
     match_crop_value = len(pump_new[pump_new['Crop(s)'] == pump_new['crop_from_cdl']])
     non_null_value = len(pump_new[pd.notnull(pump_new['crop_from_cdl'])])
@@ -97,7 +97,7 @@ def relate_well_field(pump_csv, field_shape, output_csv, lat_pump='Latitude', lo
         longitude_pump = pumps_coords[lon_pump].tolist()
 
         transformer = Transformer.from_crs('EPSG:4326', fields.crs.to_string(), always_xy=True)
-        lon_pump, lat_pump = transformer.transform(longitude_pump, latitude_pump, )
+        lon_pump, lat_pump = transformer.transform(longitude_pump, latitude_pump)
         pumps_coords = pd.DataFrame()
         pumps_coords['lat_pump'] = pd.Series(lat_pump)
         pumps_coords['lon_pump'] = pd.Series(lon_pump)
@@ -129,7 +129,7 @@ def relate_well_field(pump_csv, field_shape, output_csv, lat_pump='Latitude', lo
     new_df['Cent_y'] = pd.Series(field_lat)
     new_df['Cent_x'] = pd.Series(field_lon)
 
-    new_df.to_csv(output_csv)
+    new_df.to_csv(output_csv, index=False)
 
     return new_df
 
@@ -229,7 +229,7 @@ def relate_well_field_includecrop(pump_csv, field_shape, output_csv, lat_pump='L
     new_df = pumps_new.merge(nearest_fields, left_on='pump_index', right_on='field_index')
     new_df['distance_kdtree'] = distances
     new_df = new_df.reset_index(drop=True)
-    new_df.to_csv('kdtree.csv')
+    new_df.to_csv('kdtree.csv', index=False)
 
     # Storing nearest field coordinates as WGS 1984 projection
     field_lat = new_df[lat_field].tolist()
