@@ -1,0 +1,2 @@
+# Predictor_Improvement_USGS_MAP
+I worked on some aspects of a USGS funded Mississippi Alluvial Plain (MAP) project on Summer 2021. The works involved predictor development for the MAP-ML model, more specifically how to connect wells with field polygons, estimating a reference value for calculating effective rainfall, etc. The original model was built by my colleague Dr. Syanatan Majumdar and a paper regarding the project in currently in prep.
